@@ -279,7 +279,7 @@ def download(filename):
     file_path = UPLOAD_FOLDER + filename
     return send_file(file_path, as_attachment=True, attachment_filename='')
 
-#@app.route('/user_account', methods=['POST', 'GET'])
+@app.route('/user_account', methods=['POST', 'GET'])
 def account_settings():
     form = UpdateAccountForm()
     image_file = url_for('static', filename=('profile_pic/') + 'avatar.png')
