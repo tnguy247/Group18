@@ -1,0 +1,41 @@
+<!doctype html>
+<title>Python Flask File Upload Example</title>
+<head>
+
+ <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='notes.css') }}">
+</head>
+<div class = "navdiv">
+
+
+<h2>Select a file to upload</h2>
+</div>
+<p>
+	{% with messages = get_flashed_messages() %}
+	  {% if messages %}
+		<ul>
+		{% for message in messages %}
+		  <li>{{ message }}</li>
+		{% endfor %}
+		</ul>
+	  {% endif %}
+	{% endwith %}
+</p>
+{% if filename %}
+	<div>
+		<img src="{{ url_for('display_image', filename=filename) }}">
+	</div>
+{% endif %}
+<form method="post" action="/questions/upload" enctype="multipart/form-data">
+    <dl>
+		<p>
+			<input type="file" name="file" autocomplete="off" required>
+		</p>
+    </dl>
+	<button><a href= "{{ url_for('download', filename=filename)}}">Download Image</a></button>
+
+    <p>
+
+		<input type="submit" value="Submit">
+	</p>
+</form>

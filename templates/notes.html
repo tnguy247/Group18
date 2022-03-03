@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="UNCC Notes App">
+        <title>Group 18 Q-A app - View your Questions</title>
+        <!-- styles -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='notes.css') }}">
+
+    </head>
+    <body>
+        <div class = "navdiv">
+            <nav>
+                <button class = "home" ><a href="/index"> Home</a></button>
+                <button class = "home"><a href="/questions" > Questions </a></button>
+                <button class = "home"><a href="{{url_for('new_question') }}"> Add New Question</a></button>
+                <button class = "home"><a href ="{{url_for('logout')}}">Logout</a></button>
+
+            </nav>
+        </div>
+        <h2>Welcome {{user}} to NinerAsk!</h2>
+        <h1>Listing questions</h1>
+
+        <div class = "search">
+
+        <form method = "GET">
+            <input type = "search" placeholder="Search" name = "q">
+            <button type = "submit">Search</button>
+        </form>
+        </div>
+        <table class="table" style="width:100%" >
+            <tr>
+
+            </tr>
+            {% for question in questions %}
+            <tr height = "100px">
+                <td class = 'border'><a href="{{ url_for('get_question', question_id = question.id)}}">{{question.title }}</a></td>
+                <td class = 'border'>{{ question.date }}</td>
+                <td class = 'border'><button><a href="{{url_for('update_question', question_id=question.id)}}">Edit</a></button></td>
+                <td class = 'border'>
+                    <form action = "{{url_for('delete_question', question_id = question.id)}}" method = "post">
+                        <input type = "submit" value = "Delete">
+                    </form>
+                </td>
+                <td class = 'border'>
+                    <button><a href= "{{ url_for('upload_form')}}">Upload File</a></button>
+                </td>
+            </tr>
+            {% endfor %}
+
+        </table>
+    </body>
+</html>
+

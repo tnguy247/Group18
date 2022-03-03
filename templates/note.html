@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="UNCC Notes App">
+        <title>Group 18 Q-A app - View your Question</title>
+        <!-- styles -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='notes.css') }}">
+
+    </head>
+    <body>
+        <div class = "navdiv">
+            <nav>
+            <button class = "home"><a href="/index"> Home</a></button>
+            <button class = "home"><a href="/questions" > Question </a></button>
+                <button class = "home"><a href ="{{url_for('logout')}}">Logout</a></button>
+
+            </nav>
+        </div>
+        <h2>Welcome {{user}} to NinerAsk!</h2>
+        <h1>Question details</h1>
+
+        <table>
+            <tr>
+                <th>Title</th>
+                <th>Text</th>
+                <th>Date</th>
+            </tr>
+            <tr>
+                <td>{{ question.title }}</td>
+                <td>{{ question.text }}</td>
+                <td>{{ question.date }}</td>
+            </tr>
+        </table>
+        {% if question.comments %}
+            {% if question.comments|length > 0 %}
+                <h2>Reply</h2>
+                <ul>
+                {% for comment in question.comments %}
+                    <li>{{ comment.content }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        {% endif %}
+        <form action="{{ url_for('new_comment', question_id =question.id) }}" method="post">
+            <div class="formwrapper">
+                <h2 class="title">Add a reply</h2>
+                    <div class="form-field">
+                        {{ form.comment.label }} <br/> {{ form.comment }}
+                    </div>
+                {{ form.submit }}
+            </div>
+        </form>
+    </body>
+</html>
