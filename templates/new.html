@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="UNCC Notes App">
+        <title>UNCC Notes App - New Note</title>
+        <!-- styles -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    </head>
+    <body>
+       <nav>
+           <!--  add navigation links -->
+
+       </nav>
+
+        <h1>Welcome {{user}} to NinerAsk!</h1>
+       {% if question %}
+        <form action = "{{ url_for('update_question', question_id = question.id) }}" method = "post">
+        {% else %}
+        <form action="new" method="post">
+        {% endif %}
+           <p><label>Title </label></p><p>  <input type="text" name="title" value = "{% if question %}{{question.title}} {%endif%}"/></p>
+            <p><label>Question </label></p>
+            <p>
+                <textarea name="questionText"  rows="6" cols="0" >
+                    {% if question %}
+                        {{question.text}}
+                    {% else %}
+                        Add your new question here ...
+                    {% endif %}
+                </textarea>
+            </p>
+            <p>
+	{% with messages = get_flashed_messages() %}
+	  {% if messages %}
+		<ul>
+		{% for message in messages %}
+		  <li>{{ message }}</li>
+		{% endfor %}
+		</ul>
+	  {% endif %}
+	{% endwith %}
+</p>
+{% if filename %}
+	<div>
+		<img src="{{ url_for('display_image', filename=filename) }}">
+	</div>
+{% endif %}
+<form method="post" action="/" enctype="multipart/form-data">
+
+            <p>
+                {% if question %}
+                <input type="submit" value="Update Question"/>
+                {% else %}
+                <input type = "submit" value = "Add Question"/>
+                {% endif %}
+            </p>
+        </form>
+
+    </body>
+</html>
